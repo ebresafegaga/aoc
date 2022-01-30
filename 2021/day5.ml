@@ -3,7 +3,6 @@ open Prelude
 let covers (x, y) ((x1, y1), (x2, y2)) = 
   let dy, dx = y2 - y1, x2 - x1 in
   let is_horizontal = dy = 0 and is_vertical = dx = 0 in
-  let m () = (dy / dx) in
   let in_range a b x =
     let max = max a b and min = min a b in 
     x <= max && x >= min in
@@ -11,8 +10,9 @@ let covers (x, y) ((x1, y1), (x2, y2)) =
   else if is_vertical then x = x1 && in_range y1 y2 y
   else 
     (* return false when solving for part1 *)
-    let c = y1 - (m () * x1) in
-    y = m () * x + c && (* y = m*x + c *)
+    let m = dy / dx in 
+    let c = y1 - (m*x1) in
+    y = m*x + c && (* y = m*x + c *)
     in_range x1 x2 x && in_range y1 y2 y 
 
 let part1 lines grid =
